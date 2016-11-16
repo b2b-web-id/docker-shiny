@@ -1,7 +1,7 @@
 FROM rocker/shiny:latest
 MAINTAINER B2B.Web.ID Data Analytics Platform Labs
-COPY clouderaimpalaodbc_2.5.32.1002-2_amd64.deb /root
-COPY installpackages.R /root
+COPY root/clouderaimpalaodbc_2.5.32.1002-2_amd64.deb /root
+COPY root/installpackages.R /root
 RUN apt-get update && \
  apt-get upgrade -y && \
  apt-get install -y \
@@ -13,6 +13,8 @@ RUN apt-get update && \
  apt-get autoremove -y && \
  apt-get clean && \
  Rscript --verbose /root/installpackages.R
+COPY root/odbc.sh /etc/profile.d/
+COPY root/odbcinst.ini /etc/
 EXPOSE 3838
 VOLUME /srv/shiny-server
 VOLUME /var/log
