@@ -5,7 +5,6 @@ RUN apt-get update && \
     apt-get upgrade -y && \
     apt-get install -y git gdebi-core pandoc \
       libcurl4-gnutls-dev libcairo2-dev libxt-dev && \
-      libsasl2-modules-gssapi-mit && \
     apt-get autoremove -y && \
     apt-get clean && \
     Rscript --verbose /root/installpackages.R
