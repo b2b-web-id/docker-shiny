@@ -1,20 +1,19 @@
-FROM rocker/shiny:latest
+FROM b2bwebid/r-base:jessie
 MAINTAINER B2B.Web.ID Data Analytics Platform Labs
-COPY root/clouderaimpalaodbc_2.5.32.1002-2_amd64.deb /root
-COPY root/installpackages.R /root
+COPY installpackages.R /root
 RUN apt-get update && \
- apt-get upgrade -y && \
- apt-get install -y \
-  unixodbc unixodbc-dev \
-  git \
-  libsasl2-modules-gssapi-mit && \
- dpkg -i /root/clouderaimpalaodbc_2.5.32.1002-2_amd64.deb && \
- rm /root/clouderaimpalaodbc_2.5.32.1002-2_amd64.deb && \
- apt-get autoremove -y && \
- apt-get clean && \
- Rscript --verbose /root/installpackages.R
-COPY root/odbc.sh /etc/profile.d/
-COPY root/odbcinst.ini /etc/
+    apt-get upgrade -y && \
+    apt-get install -y git gdebi-core pandoc \
+      libcurl4-gnutls-dev libcairo2-dev libxt-dev && \
+      libsasl2-modules-gssapi-mit && \
+    apt-get autoremove -y && \
+    apt-get clean && \
+    Rscript --verbose /root/installpackages.R
+RUN wget --no-verbose https://s3.amazonaws.com/rstudio-shiny-server-os-build/ubuntu-12.04/x86_64/VERSION -O "version.txt" && \
+    VERSION=$(cat version.txt)  && \
+    wget --no-verbose "https://s3.amazonaws.com/rstudio-shiny-server-os-build/ubuntu-12.04/x86_64/shiny-server-$VERSION-amd64.deb" -O ss-latest.deb && \
+    gdebi -n ss-latest.deb && \
+    rm -f version.txt ss-latest.deb
 EXPOSE 3838
 VOLUME /srv/shiny-server
 VOLUME /var/log
