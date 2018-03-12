@@ -3,7 +3,7 @@ MAINTAINER B2B.Web.ID Data Analytics Platform Labs
 COPY installpackages.R /root
 RUN apt-get update && \
     apt-get upgrade -y && \
-    apt-get install -y git gdebi-core pandoc \
+    apt-get install -y wget git gdebi-core pandoc \
       libcurl4-gnutls-dev libcairo2-dev libxt-dev && \
     apt-get autoremove -y && \
     apt-get clean && \
