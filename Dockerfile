@@ -12,8 +12,10 @@ RUN wget --no-verbose https://s3.amazonaws.com/rstudio-shiny-server-os-build/ubu
     VERSION=$(cat version.txt)  && \
     wget --no-verbose "https://s3.amazonaws.com/rstudio-shiny-server-os-build/ubuntu-12.04/x86_64/shiny-server-$VERSION-amd64.deb" -O ss-latest.deb && \
     gdebi -n ss-latest.deb && \
-    rm -f version.txt ss-latest.deb
+    rm -f version.txt ss-latest.deb && \
+    mkdir -p /var/log/shiny-server && \
+    chown shiny.shiny /var/log/shiny-server
 EXPOSE 3838
 VOLUME /srv/shiny-server
 VOLUME /var/log
-CMD ["/usr/bin/shiny-server.sh"]
+CMD ["/usr/bin/shiny-server"]
