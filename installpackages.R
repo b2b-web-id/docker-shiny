@@ -19,5 +19,8 @@ install.packages(c(
  'reshape',
  'ggdendro',
  'ggplot2',
- 'RODBC')
+ 'RODBC',
+ 'shiny',
+ 'rmarkdown'),
+ repos='http://cran.r-project.org/'
 )
