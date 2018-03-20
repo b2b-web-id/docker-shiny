@@ -1,4 +1,4 @@
-FROM b2bwebid/r-base:jessie
+FROM b2bwebid/r-base:jessie-cran34
 MAINTAINER B2B.Web.ID Data Analytics Platform Labs
 COPY installpackages.R /root
 RUN apt-get update && \
