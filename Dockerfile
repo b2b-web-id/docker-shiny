@@ -1,14 +1,14 @@
-FROM b2bwebid/r-base:jessie-cran34
+FROM b2bwebid/r-base:jessie-cran35
 MAINTAINER B2B.Web.ID Data Analytics Platform Labs
-COPY installpackages.R /root
 RUN apt-get update && \
     apt-get upgrade -y && \
     apt-get install -y wget git gdebi-core pandoc \
       libcurl4-gnutls-dev libcairo2-dev libxt-dev && \
     apt-get autoremove -y && \
     apt-get clean && \
-    Rscript --verbose /root/installpackages.R
-RUN wget --no-verbose https://s3.amazonaws.com/rstudio-shiny-server-os-build/ubuntu-12.04/x86_64/VERSION -O "version.txt" && \
+    wget https://raw.githubusercontent.com/b2b-web-id/docker-shiny/master/installpackages.R -O /root/installpackages.R && \
+    Rscript --verbose /root/installpackages.R && \
+    wget --no-verbose https://s3.amazonaws.com/rstudio-shiny-server-os-build/ubuntu-12.04/x86_64/VERSION -O "version.txt" && \
     VERSION=$(cat version.txt)  && \
     wget --no-verbose "https://s3.amazonaws.com/rstudio-shiny-server-os-build/ubuntu-12.04/x86_64/shiny-server-$VERSION-amd64.deb" -O ss-latest.deb && \
     gdebi -n ss-latest.deb && \
