@@ -21,6 +21,9 @@ install.packages(c(
  'ggplot2',
  'RODBC',
  'shiny',
- 'rmarkdown'),
+ 'rmarkdown',
+ 'leaflet',
+ 'DT',
+ 'shinydashboard'),
  repos='http://cran.r-project.org/'
 )
