@@ -24,6 +24,7 @@ install.packages(c(
  'rmarkdown',
  'leaflet',
  'DT',
+ 'quantmod',
  'shinydashboard'),
  repos='http://cran.r-project.org/'
 )
