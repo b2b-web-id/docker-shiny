@@ -1,4 +1,5 @@
 install.packages(c(
+ 'devtools',
  'import',
  'rpart',
  'e1071',
@@ -21,6 +22,8 @@ install.packages(c(
  'ggplot2',
  'RODBC',
  'shiny',
+ 'dplyr',
+ 'dbplyr',
  'rmarkdown',
  'leaflet',
  'DT',
@@ -28,3 +31,4 @@ install.packages(c(
  'shinydashboard'),
  repos='http://cran.r-project.org/'
 )
+devtools::install_github('ramnathv/satin')
