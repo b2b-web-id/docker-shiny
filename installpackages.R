@@ -1,4 +1,4 @@
-install.packages(c(
+paket <- c(
  'devtools',
  'import',
  'rpart',
@@ -28,7 +28,10 @@ install.packages(c(
  'leaflet',
  'DT',
  'quantmod',
- 'shinydashboard'),
- repos='http://cran.r-project.org/'
-)
+ 'shinydashboard')
+for(i %in% paket) {
+  install.packages(i,
+    repo='http://cran.rstudio.com/'
+    )
+}
 devtools::install_github('ramnathv/satin')

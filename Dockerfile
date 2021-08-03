@@ -1,20 +1,22 @@
-FROM b2bwebid/r-base:stretch
+FROM b2bwebid/r-base:buster
 MAINTAINER B2B.Web.ID Data Analytics Platform Labs
-COPY installpackages.R /root
-RUN apt-get update && \
-    apt-get upgrade -y && \
-    apt-get install -y wget git gdebi-core pandoc \
-      libcurl4-gnutls-dev libcairo2-dev libxt-dev && \
-    apt-get autoremove -y && \
-    apt-get clean && \
-    Rscript --verbose /root/installpackages.R
-RUN wget --no-verbose https://s3.amazonaws.com/rstudio-shiny-server-os-build/ubuntu-12.04/x86_64/VERSION -O "version.txt" && \
-    VERSION=$(cat version.txt)  && \
-    wget --no-verbose "https://s3.amazonaws.com/rstudio-shiny-server-os-build/ubuntu-12.04/x86_64/shiny-server-$VERSION-amd64.deb" -O ss-latest.deb && \
-    gdebi -n ss-latest.deb && \
-    rm -f version.txt ss-latest.deb && \
+RUN apt update && apt upgrade -y && apt clean
+RUN apt install -y pandoc && apt clean
+RUN apt install -y gdebi-core && apt clean
+RUN apt install -y libcurl4-gnutls-dev libcairo2-dev libxt-dev && apt-get clean
+COPY shiny-server-1.5.16.958-amd64.deb /root
+RUN gdebi -n /root/shiny-server-1.5.16.958-amd64.deb && \
+    rm /root/shiny-server-1.5.16.958-amd64.deb && \
     mkdir -p /var/log/shiny-server && \
     chown shiny.shiny /var/log/shiny-server
+#COPY installpackages.R /root
+#RUN Rscript --verbose /root/installpackages.R
+RUN Rscript --verbose -e 'install.packages(c("rmarkdown"))'
+RUN Rscript --verbose -e 'install.packages(c("quantmod"))'
+RUN Rscript --verbose -e 'install.packages(c("dbplyr"))'
+RUN Rscript --verbose -e 'install.packages(c("leaflet"))'
+RUN Rscript --verbose -e 'install.packages(c("shinydashboard"))'
+RUN Rscript --verbose -e 'install.packages(c("devtools"))'
 EXPOSE 3838
 VOLUME /srv/shiny-server
 VOLUME /var/log
